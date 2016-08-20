@@ -5,27 +5,32 @@ var PIN_NUMBERS = [7, 11, 12, 13, 15, 16, 18, 22];
 var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
 var inits = [];
 
-for (var i = 0; i < PIN_NUMBERS.length; i++) {
-    inits.push(new Promise(function (resolve, reject) {
-        gpio.open(PIN_NUMBERS[i], 'output', function (err) {
-            if (err) reject();
-            resolve();
-        });
-    }));
-}
+// for (var i = 0; i < PIN_NUMBERS.length; i++) {
+//     inits.push(new Promise(function (resolve, reject) {
+//         var pin = PIN_NUMBERS[i];
+//         gpio.close(pin);
+//         gpio.open(pin, 'output', function (err) {
+//             if (err) reject();
+//             console.log('opened', pin);
+//             resolve();
+//         });
+//     }));
+// }
 
 function togglePin(pin, cb) {
-    Promises.all(inits).then(function () {
-        get(pin, function (err, v) {
-            set(pin, 1-v, cb);
-        });
+    get(pin, function (err, v) {
+        set(pin, 1-v, cb);
     });
 }
 function setPin(pin, val, cb) {
-    gpio.write(pin, val, cb);
+    gpio.open(pin, 'output', function (err) {
+        gpio.write(pin, val, cb);
+    });
 }
 function getPin(pin, cb) {
-    gpio.read(pin, cb);
+    gpio.open(pin, 'output', function (err) {
+        gpio.read(pin, cb);
+    });
 }
 
 function toggle(ix, cb) {
