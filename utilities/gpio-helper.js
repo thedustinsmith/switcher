@@ -19,6 +19,7 @@ var inits = [];
 
 function togglePin(pin, cb) {
     getPin(pin, function (err, v) {
+        console.log(`got val from ${pin}: ${v}`);
         setPin(pin, 1-v, cb);
     });
 }
