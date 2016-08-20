@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Select a switch to flip</h2>
+
+<form method="post" action="/toggle">
+    <button name="switchIx" value="1">Toggle 1</button>
+    <button name="switchIx" value="2">Toggle 2</button>
+    <button name="switchIx" value="3">Toggle 3</button>
+    <button name="switchIx" value="4">Toggle 4</button>
+</form>
+
+{% endblock content %}
