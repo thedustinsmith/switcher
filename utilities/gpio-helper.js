@@ -18,18 +18,26 @@ var inits = [];
 // }
 
 function togglePin(pin, cb) {
-    get(pin, function (err, v) {
-        set(pin, 1-v, cb);
+    getPin(pin, function (err, v) {
+        setPin(pin, 1-v, cb);
     });
 }
 function setPin(pin, val, cb) {
     gpio.open(pin, 'output', function (err) {
-        gpio.write(pin, val, cb);
+        gpio.write(pin, val, function (err) {
+            if(err) throw err;
+            gpio.close(pin);
+            cb(err, val);
+        });
     });
 }
 function getPin(pin, cb) {
     gpio.open(pin, 'output', function (err) {
-        gpio.read(pin, cb);
+        gpio.read(pin, function (err, v) {
+            if(err) throw err;
+            gpio.close(pin);
+            cb(err, v);
+        });
     });
 }
 
