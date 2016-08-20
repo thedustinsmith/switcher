@@ -33,6 +33,8 @@ function toggle(ix, cb) {
     togglePin(PIN_NUMBERS[0], ret);
     togglePin(PIN_NUMBERS[1], ret);
 }
+function set(){}
+function get(){}
 module.exports = {
     toggle: toggle,
     set: set,
