@@ -1,7 +1,7 @@
 var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
-//var gpioHelper = require('./utilities/gpio-helper');
+var gpioHelper = require('./utilities/gpio-helper');
 
 var app = express();
 app.set('view engine', 'html');
