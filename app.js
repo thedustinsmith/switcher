@@ -30,7 +30,8 @@ app.get('/', function (req, res) {
 
 app.post('/toggle', function (req, res) {
     var s = req.body.switchIx;
-    gpioHelper.toggle(0, function() {
+    gpioHelper.enable(0, function (err) {
+        if (err) throw err;
         res.redirect('/');
     });
 });

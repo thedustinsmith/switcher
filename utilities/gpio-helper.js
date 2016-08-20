@@ -5,23 +5,11 @@ var PIN_NUMBERS = [7, 11, 12, 13, 15, 16, 18, 22];
 var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
 var inits = [];
 
-// for (var i = 0; i < PIN_NUMBERS.length; i++) {
-//     inits.push(new Promise(function (resolve, reject) {
-//         var pin = PIN_NUMBERS[i];
-//         gpio.close(pin);
-//         gpio.open(pin, 'output', function (err) {
-//             if (err) reject();
-//             console.log('opened', pin);
-//             resolve();
-//         });
-//     }));
-// }
-
-function togglePin(pin, cb) {
-    getPin(pin, function (err, v) {
-        console.log(`got val from ${pin}: ${v}`);
-        setPin(pin, 1-v, cb);
-    });
+function enablePin(pin, cb) {
+    setPin(pin, 1, cb);
+}
+function disablePin(pin, cb) {
+    setPin(pin, 0, cb);
 }
 function setPin(pin, val, cb) {
     gpio.open(pin, 'output', function (err) {
@@ -42,15 +30,7 @@ function getPin(pin, cb) {
     });
 }
 
-function toggle(ix, cb) {
-    var ret = _.after(2, cb);
-    togglePin(PIN_NUMBERS[0], ret);
-    togglePin(PIN_NUMBERS[1], ret);
-}
-function set(){}
-function get(){}
 module.exports = {
-    toggle: toggle,
-    set: set,
-    get: get
+    enable: enable,
+    disable: disable
 };
