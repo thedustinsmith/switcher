@@ -39,9 +39,11 @@ catch(e) {
 }
 
 function enablePin(pin, cb) {
+    pin = PIN_NUMBERS[pin];
     setPin(pin, 1, cb);
 }
 function disablePin(pin, cb) {
+    pin = PIN_NUMBERS[pin];
     setPin(pin, 0, cb);
 }
 function setPin(pin, val, cb) {
