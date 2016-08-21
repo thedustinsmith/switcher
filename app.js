@@ -29,16 +29,21 @@ app.get('/', function (req, res) {
 });
 
 app.post('/toggle', function (req, res) {
-    var s = req.body.switchIx;
+    var s = parseInt(req.body.switchIx, 10);
+    var val = parseInt(req.body.val || 0, 10);
+    gpioHelper.set(s, val, function () {
+        res.redirect('/');
+    });
+
     // gpioHelper.enable(0, function (err) {
     //     if (err) throw err;
     //     res.redirect('/');
     // });
     // gpioHelper.toggle(0);
     // res.redirect('/');
-    gpioHelper.set(0, 1, function () {
-        res.redirect('/');
-    });
+    // gpioHelper.set(0, 1, function () {
+    //     res.redirect('/');
+    // });
 });
 
 app.listen(3000);

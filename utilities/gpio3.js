@@ -10,7 +10,7 @@ try {
 catch(e) {
     gpio = {
         export: function(p, opts) {
-            opts.onReady();
+            opts.ready();
         },
         set: function (v) {
             this.value = v;
@@ -20,7 +20,7 @@ catch(e) {
 
 function set (port, val, cb) {
     var g = gpio.export(PORT_NUMBERS[port], {
-        onReady: function() { 
+        ready: function() { 
             g.set(val);
             cb();
         }
