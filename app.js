@@ -1,7 +1,7 @@
 var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
-var gpioHelper = require('./utilities/gpio2');
+var gpioHelper = require('./utilities/gpio3');
 
 var app = express();
 app.set('view engine', 'html');
@@ -34,8 +34,11 @@ app.post('/toggle', function (req, res) {
     //     if (err) throw err;
     //     res.redirect('/');
     // });
-    gpioHelper.toggle(0);
-    res.redirect('/');
+    // gpioHelper.toggle(0);
+    // res.redirect('/');
+    gpioHelper.set(0, 1, function () {
+        res.redirect('/');
+    });
 });
 
 app.listen(3000);

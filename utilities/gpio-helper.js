@@ -65,6 +65,14 @@ function getPin(pin, cb) {
     });
 }
 
+function clearPins(){
+    for(var i = 0; i< PIN_NUMBERS.length; i++) {
+        gpio.close(PIN_NUMBERS[i]);
+    }
+}
+
+process.on('exit', clearPins);
+clearPins();
 module.exports = {
     enable: enablePin,
     disable: disablePin
