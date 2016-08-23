@@ -38,7 +38,7 @@ function set (port, val, cb) {
     gpios[port.toString()].set(val, cb);
 }
 function get(port) {
-    cb(gpios[port].value);
+    return gpios[port].value;
 }
 function toggle(port, cb) {
     set(port, 1 - get(port), cb);
