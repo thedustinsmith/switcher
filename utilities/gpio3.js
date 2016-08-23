@@ -26,11 +26,18 @@ function set (port, val, cb) {
         }
     });
 }
-function get( port) {
-
+function get( port, cb) {
+    port = PORT_NUMBERS[port];
+    var g = gpio.export(port, {
+        ready: function() {
+            g.get(cb);
+        }
+    });
 }
-function toggle(port) {
-
+function toggle(port, cb) {
+    get(port, function(v) {
+        set(port, 1-vcb)
+    });
 }
 
 module.exports = {
