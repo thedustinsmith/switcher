@@ -2,6 +2,7 @@ var _ = require('lodash');
 // some libraries use pins, some use ports
 var PIN_NUMBERS = [7, 11, 12, 13, 15, 16, 18, 22];
 var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
+var PORT_PAIRS = [[4, 17], [18, 27], [22, 23], [24, 25]];
 var gpios = {}
 var gpio;
 try {
@@ -18,7 +19,7 @@ catch(e) {
     };
 }
 
-for (var i = 0; i< PORT_NUMBERS.lenth; i++) {
+for (var i = 0; i< PORT_NUMBERS.length; i++) {
     var p = PORT_NUMBERS[i];
     gpios[p.toString()] = gpio.export(p, {
         ready: function() {
@@ -34,7 +35,7 @@ process.on('exit', function() {
 });
 
 function set (port, val, cb) {
-    gpios[port].set(val, cb);
+    gpios[port.toString()].set(val, cb);
 }
 function get(port) {
     cb(gpios[port].value);
@@ -42,9 +43,14 @@ function get(port) {
 function toggle(port, cb) {
     set(port, 1 - get(port), cb);
 }
-
+function toggleBoth(pair, cb) {
+    var ret = _.after(2, cb);
+    toggle(PORT_PAIRS[pair][0], ret);
+    toggle(PORT_PAIRS[pair][1], ret);
+}
 module.exports = {
     toggle: toggle,
+    toggleBoth: toggleBoth,
     set: set,
     get: get
 };
