@@ -5,9 +5,8 @@ var gpioHelper = require('./utilities/gpio3');
 
 var app = express();
 app.set('view engine', 'html');
-// parse application/x-www-form-urlencoded
+app.use('/static', express.static('static'));
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
 app.use(bodyParser.json())
 
 nunjucks.configure('views', {
@@ -24,15 +23,24 @@ nunjucks.configure('views', {
     }
 });
 
+function getSwitchStatus(){
+    return {
+        switch0: !gpioHelper.get(0),
+        switch1: !gpioHelper.get(1),
+        switch2: !gpioHelper.get(2),
+        switch3: !gpioHelper.get(3),
+    };
+}
+
 app.get('/', function (req, res) {
-    res.render('index');
+    res.render('index', getSwitchStatus());
 });
 
 app.post('/toggle', function (req, res) {
-    var s = parseInt(req.body.switchIx, 10);
-    var val = parseInt(req.body.val || 0, 10);
+    var s = parseInt(req.body.pair, 10);
+    var v = parseInt(req.body.value, 10);
     gpioHelper.toggleBoth(s, function() {
-        res.redirect('/');
+        res.json(getSwitchStatus());
     });
 });
 

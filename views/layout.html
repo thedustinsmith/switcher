@@ -1,14 +1,23 @@
 <! DOCTYPE html>
 <html>
 <head>
-    <title>
-    </title>
+    <title>Smilaski Home Sound</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://fonts.googleapis.com/css?family=Exo+2:100,300,400,600,700" rel="stylesheet">
+    <link href="/static/css/simplegrid.css" rel="stylesheet" />
     <link href="/static/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    {% block content %}
-        <p>Default Content</p>
+    <div class="page-container">
+        {% block content %}
+            <p>Default Content</p>
+        {% endblock %}
+    </div>
+
+    <script type="text/javascript" src="/static/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    {% block scripts %}
     {% endblock %}
 </body>
 </html>

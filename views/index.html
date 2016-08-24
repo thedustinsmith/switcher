@@ -1,15 +1,33 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>Select a switch to flip</h2>
+<h1>Smilaski Home Stereo</h1>
 
 <form method="post" action="/toggle">
-    <input type="number" min="0" max="1" name="val" />
-
-    <button name="switchIx" value="0">Toggle 1</button>
-    <button name="switchIx" value="1">Toggle 2</button>
-    <button name="switchIx" value="2">Toggle 3</button>
-    <button name="switchIx" value="3">Toggle 4</button>
+    <div class="grid">
+        <div class="toggle-wrap col-1-2">
+            <h4>Garage</h4>
+            <button class="btn {% if switch0 %}enabled{% endif %}" value="0" name="switchIx"></button>
+        </div>
+        <div class="toggle-wrap col-1-2">
+            <h4>Downstairs</h4>
+            <button class="btn {% if switch1 %}enabled{% endif %}" value="1" name="switchIx"></button>
+        </div>
+        <div class="toggle-wrap col-1-2">
+            <h4>Upstairs</h4>
+            <button class="btn {% if switch2 %}enabled{% endif %}" value="2" name="switchIx"></button>
+        </div>
+        <div class="toggle-wrap col-1-2">
+            <h4>Outside</h4>
+            <button class="btn {% if switch3 %}enabled{% endif %}" value="3" name="switchIx"></button>
+        </div>
+    </div>
 </form>
 
+
 {% endblock content %}
+{% block scripts %}
+    <script>
+    Main();
+    </script>
+{% endblock scripts %}

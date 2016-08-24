@@ -5,20 +5,34 @@ var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
 var PORT_PAIRS = [[4, 17], [18, 27], [22, 23], [24, 25]];
 var gpios = {}
 var gpio;
-try {
-    gpio = require('gpio');
-}
-catch(e) {
+var dev = true;
+
+function initFakeGpio() {
+    function noop(){}
+    function G() {
+        this.value = 1;
+    }
+    G.prototype.set = function(v, cb) {
+        this.value = v;
+        cb(v);
+    }
     gpio = {
         export: function(p, opts) {
-            opts.ready();
-        },
-        set: function (v) {
-            this.value = v;
+            return new G();
         }
     };
 }
-
+if (dev) {
+    initFakeGpio();
+}
+else {
+    try {
+        gpio = require('gpio');
+    }
+    catch(e) {
+       initFakeGpio();
+    }
+}
 for (var i = 0; i< PORT_NUMBERS.length; i++) {
     var p = PORT_NUMBERS[i];
     gpios[p.toString()] = gpio.export(p, {
@@ -38,7 +52,7 @@ function set (port, val, cb) {
     gpios[port.toString()].set(val, cb);
 }
 function get(port) {
-    return gpios[port].value;
+    return gpios[port.toString()].value;
 }
 function toggle(port, cb) {
     set(port, 1 - get(port), cb);
@@ -48,9 +62,17 @@ function toggleBoth(pair, cb) {
     toggle(PORT_PAIRS[pair][0], ret);
     toggle(PORT_PAIRS[pair][1], ret);
 }
+function setBoth(pair, val, cb) {
+    var ret = _.after(2, cb);
+    set(PORT_PAIRS[pair][0], val, ret);
+    set(PORT_PAIRS[pair][1], val, ret);
+}
+function getBoth(pair) {
+    return get(PORT_PAIRS[pair][0]);
+}
 module.exports = {
-    toggle: toggle,
+    // toggle: toggle,
     toggleBoth: toggleBoth,
-    set: set,
-    get: get
+    set: setBoth,
+    get: getBoth
 };
