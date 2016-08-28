@@ -8,7 +8,8 @@ var Main = (function() {
         data['value'] = $btn.is('.enabled') ? 1 : 0;
         data['pair'] = val;
         $.post($form.attr('action'), data).done(function(data){
-            $btn.toggleClass('enabled');
+            var v = data['switch' + val];
+            $btn.toggleClass('enabled', v);
         });
         return false;
     });
