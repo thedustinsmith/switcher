@@ -8,9 +8,13 @@ var Main = (function() {
         data['value'] = $btn.is('.enabled') ? 1 : 0;
         data['pair'] = val;
         $.post($form.attr('action'), data).done(function(data){
-            console.log(data);
             $btn.toggleClass('enabled');
         });
         return false;
-    })
+    });
+
+    var socket = io.connect(window.location.toString());
+    socket.on('toggle', function (data) {
+        $('button[name=switchIx][value="' + data.pair + '"]').toggleClass('enabled', data.val === 0);
+    });
 });

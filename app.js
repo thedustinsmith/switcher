@@ -2,8 +2,10 @@ var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
 var gpioHelper = require('./utilities/gpio3');
-
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 app.set('view engine', 'html');
 app.use('/static', express.static('static'));
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -37,11 +39,15 @@ app.get('/', function (req, res) {
 });
 
 app.post('/toggle', function (req, res) {
-    var s = parseInt(req.body.pair, 10);
+    var pair = parseInt(req.body.pair, 10);
     var v = parseInt(req.body.value, 10);
-    gpioHelper.toggleBoth(s, function() {
+    gpioHelper.toggleBoth(pair, function() {
+        io.emit('toggle', { 
+            pair: pair, 
+            val: gpioHelper.get(pair)
+        });
         res.json(getSwitchStatus());
     });
 });
 
-app.listen(3000);
+server.listen(3000,'192.168.1.243');

@@ -5,7 +5,7 @@ var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
 var PORT_PAIRS = [[4, 17], [18, 27], [22, 23], [24, 25]];
 var gpios = {}
 var gpio;
-var dev = false;
+var dev = process.env.NODE_ENV === 'development';
 
 function initFakeGpio() {
     function noop(){}

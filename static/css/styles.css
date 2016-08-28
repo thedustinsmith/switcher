@@ -1,8 +1,17 @@
 body {
     font-family: 'Exo 2', sans-serif;
-    background: #44365a;
-    color: white;
-    text-shadow: 0 1px 1px black;
+    color: #222;
+    background-color: #ffffff;
+}
+#background-container {
+    background-image: url(../images/seigaiha.png);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.5;
+    z-index: 0;
 }
 h1 {
     font-weight: 100;
@@ -14,6 +23,8 @@ h1 {
     width: 50%;
     margin: 0 auto;
     text-align: center;
+    z-index: 1;
+    position: relative;
 }
 .grid {
     min-width: 0;
@@ -22,7 +33,7 @@ h1 {
 .toggle-wrap button {
     display: inline-block;
     border: 0;
-    background: #cc8383;
+    background: #b35454;
     width: 75px;
     height: 30px;
     border-radius: 15px;
@@ -47,7 +58,7 @@ h1 {
     transition: transform .3s cubic-bezier(0.175, 0.885, 0.32, 1);
 }
 .toggle-wrap button.enabled {
-    background: #bada55;
+    background: #54a254;
 }
 .toggle-wrap button.enabled:after {
     box-shadow: 0 0 2px #1a5a2f;
