@@ -50,4 +50,4 @@ app.post('/toggle', function (req, res) {
     });
 });
 
-server.listen(3000,'192.168.1.243');
+server.listen(3000);
