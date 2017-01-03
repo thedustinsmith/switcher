@@ -2,7 +2,8 @@ var _ = require('lodash');
 // some libraries use pins, some use ports
 var PIN_NUMBERS = [7, 11, 12, 13, 15, 16, 18, 22];
 var PORT_NUMBERS = [4, 17, 18, 27, 22, 23, 24, 25];
-var PORT_PAIRS = [[4, 17], [18, 27], [22, 23], [24, 25]];
+//var PORT_PAIRS = [[4, 17], [18, 27], [22, 23], [24, 25]];
+var PORT_PAIRS = [[4, 22],[17, 23],[18, 24],[27, 25]];
 var gpios = {}
 var gpio;
 var dev = process.env.NODE_ENV === 'development';
