@@ -5,22 +5,12 @@
 
 <form method="post" action="/toggle">
     <div class="grid">
+        {% for zone in zones %}
         <div class="toggle-wrap col-1-2">
-            <h4>Garage</h4>
-            <button class="btn {% if switch0 %}enabled{% endif %}" value="0" name="switchIx"></button>
+            <h4>{$ zone.name $}</h4>
+            <button class="btn {% if zone.isOn %}enabled{% endif %}" value="{$ zone.id $}" name="switchIx"></button>
         </div>
-        <div class="toggle-wrap col-1-2">
-            <h4>Downstairs</h4>
-            <button class="btn {% if switch1 %}enabled{% endif %}" value="1" name="switchIx"></button>
-        </div>
-        <div class="toggle-wrap col-1-2">
-            <h4>Upstairs</h4>
-            <button class="btn {% if switch2 %}enabled{% endif %}" value="2" name="switchIx"></button>
-        </div>
-        <div class="toggle-wrap col-1-2">
-            <h4>Outside</h4>
-            <button class="btn {% if switch3 %}enabled{% endif %}" value="3" name="switchIx"></button>
-        </div>
+        {% endfor %}
     </div>
 </form>
 

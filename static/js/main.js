@@ -5,10 +5,9 @@ var Main = (function() {
             val = parseInt($btn.val(), 10),
             data = {};
 
-        data['value'] = $btn.is('.enabled') ? 1 : 0;
         data['pair'] = val;
-        $.post($form.attr('action'), data).done(function(data){
-            var v = data['switch' + val];
+        $.post($form.attr('action'), data).done(function (data) {
+            var v = data.status;
             $btn.toggleClass('enabled', v);
         });
         return false;
@@ -16,6 +15,6 @@ var Main = (function() {
 
     var socket = io.connect(window.location.toString());
     socket.on('toggle', function (data) {
-        $('button[name=switchIx][value="' + data.pair + '"]').toggleClass('enabled', data.val === 0);
+        $('button[name=switchIx][value="' + data.zoneId + '"]').toggleClass('enabled', data.val);
     });
 });

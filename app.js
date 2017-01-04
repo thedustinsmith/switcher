@@ -1,7 +1,7 @@
 var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
-var gpioHelper = require('./utilities/gpio3');
+var zoneController = require('./utilities/zoneController');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -25,28 +25,21 @@ nunjucks.configure('views', {
     }
 });
 
-function getSwitchStatus(){
-    return {
-        switch0: !gpioHelper.get(0),
-        switch1: !gpioHelper.get(1),
-        switch2: !gpioHelper.get(2),
-        switch3: !gpioHelper.get(3),
-    };
-}
-
 app.get('/', function (req, res) {
-    res.render('index', getSwitchStatus());
+    res.render('index', {
+        zones: zoneController.getAll()
+    });
 });
 
 app.post('/toggle', function (req, res) {
-    var pair = parseInt(req.body.pair, 10);
-    var v = parseInt(req.body.value, 10);
-    gpioHelper.toggleBoth(pair, function() {
+    var zoneId = parseInt(req.body.pair, 10);
+    var zone = zoneController.get(zoneId);
+    zoneController.toggle(zoneId, function (z) {
         io.emit('toggle', { 
-            pair: pair, 
-            val: gpioHelper.get(pair)
+            zoneId: zoneId, 
+            val: z.isOn
         });
-        res.json(getSwitchStatus());
+        res.json({status: z.isOn});
     });
 });
 
