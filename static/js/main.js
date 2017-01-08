@@ -18,3 +18,7 @@ var Main = (function() {
         $('button[name=switchIx][value="' + data.zoneId + '"]').toggleClass('enabled', data.val);
     });
 });
+
+var Edit = (function() {
+
+});

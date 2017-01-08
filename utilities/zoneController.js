@@ -56,6 +56,9 @@ module.exports = {
     getAll: function() {
         return ZONES;
     },
+    getValidPorts: function () {
+        return PORT_NUMBERS;
+    },
     get: get,
     set: set,
     toggle: toggleZone

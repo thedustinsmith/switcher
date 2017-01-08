@@ -31,6 +31,25 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/edit', function (req, res) {
+    res.render('edit', {
+        zones: zoneController.getAll(),
+        ports: zoneController.getValidPorts()
+    });
+});
+
+app.post('/edit', function (req, res) {
+    var zones = zoneController.getAll();
+    zones.forEach(function(z) {
+        z.name = req.body['zone_' + z.id + '_name'] || z.name;
+        z.ports[0] = req.body['zone_' + z.id + '_port1'] || z.ports[0];
+        z.ports[1] = req.body['zone_' + z.id + '_port2'] || z.ports[1];
+    });
+    console.log(req.body);
+    res.redirect('/');
+});
+
+
 app.post('/toggle', function (req, res) {
     var zoneId = parseInt(req.body.pair, 10);
     var zone = zoneController.get(zoneId);
